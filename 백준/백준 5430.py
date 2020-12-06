@@ -1,55 +1,57 @@
+from collections import deque
+
 T = int(input())
 
-for i in range(T) :
-    p = input()
-    n = int(input())
-    a = input()
-    getlist = []
-    strset = ""
-    way = 0
-    contin = 0
+for _ in range(T) :
 
-    for i in a :
-        if i == "[" :
-            continue
-        elif i == "," or i == "]":
-            if strset != "" :
-                getlist.append(int(strset))
-            strset = ""
-        else :
-            strset = strset + i
+    function = list(str(input()))
 
-    if p.count('D') > len(getlist) :
-        print('error')
-    elif p.count('D') == len(getlist) :
-        print('[]')
+    N = int(input())
+
+    temp = str(input())
+
+    if N != 0 :
+
+        numlist = deque(list(map(int, temp[1:len(temp)-1].split(","))))
     else :
-        for i in p :
-            if i == 'R' :
-                if contin == 0 :
-                    contin = 1
-                else :
-                    contin += 1
+        numlist = deque([])
+
+    direction = 0
+    error = 0
+
+    for i in function :
+        if i == "R" :
+            if direction == 0 :
+                direction = -1
             else :
-                if contin % 2 == 0 :
-                    way = 0
+                direction = 0
+        elif i == "D" :
+            if numlist == deque([]) :
+                error = 1
+                break
+            else :
+                if direction == -1 :
+                    numlist.pop()
                 else :
-                    way = 1
+                    numlist.popleft()
 
-                if way == 0 :
-                    getlist = getlist[1:]
-                else :
-                    getlist.reverse()
-                    getlist = getlist[1:]
+    if error == 1 :
+        print('error')
+    else :
+        if direction == 0 :
+            answer = list(numlist)
+        else :
+            answer = list(numlist)[::-1]
 
-                contin = 0
-                way = 0
+        typing = ""
 
-        print(getlist)
+        for i in range(len(answer)) :
+            if i != len(answer) -1 :
+                typing += str(answer[i]) + ","
+            else :
+                typing += str(answer[i])
+
+        print("[" + typing + "]")
+            
                 
             
-
-                
-        
-
-    
