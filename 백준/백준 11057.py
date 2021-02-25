@@ -1,22 +1,22 @@
-dp = [0] * 1001
+dp = [0]
 
-box = [[1] * 10]
+start = [1] * 10
+temp = [0] * 10
 
 for i in range(1, 1001) :
-    dp[i] = sum(box[i-1]) % 10007
+    dp.append(sum(start) % 10007)
 
-    temp = []
-
-    now = dp[i]
+    startnum = dp[i]
 
     for j in range(10) :
-       temp.append(now)
+        if j == 0 :
+            temp[j] = startnum
+        else :
+            temp[j] = temp[j-1] - start[j-1]
 
-       now -= box[i-1][j]
+    start = temp
+    temp = [0] * 10
 
-    box.append(temp)
+N = int(input())
 
-
-n = int(input())
-
-print(dp[n])
+print(dp[N])
